@@ -1,0 +1,20 @@
+﻿@model E2.Controllers.SwapOobViewModel
+<div class="card m-5 p-5 ms-0 text-center">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <div class="navbar-nav ml-auto">
+                <a id="cartNavbar" class="nav-link ms-10" aria-current="page" href="#">
+                    <i class="fa fa-shopping-cart"></i> COUNT SELECTED <span class="badge bg-secondary">@Model.ItemsSelected</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+<p>In this example a partial is loaded and replaces an element outside of the partial</p>
+<div id="content"
+     hx-get="@Url.Action("AddItem", "SwapOob")"
+     hx-trigger="load"
+>
+</div>
+</div>

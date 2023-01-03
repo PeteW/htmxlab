@@ -1,0 +1,22 @@
+﻿@model E2.Controllers.SwapOobViewModel
+
+<!-- when partial loaded this will replace #cartNavbar -->
+<a id="cartNavbar" hx-swap-oob="true" class="nav-link ms-10" aria-current="page" href="#">
+    <i class="fa fa-shopping-cart"></i> COUNT SELECTED <span class="badge bg-secondary">@Model.ItemsSelected</span>
+</a>
+<div id="shoppingItem" class="d-flex justify-content-center align-items-center container px-2 mt-4">
+    <div class="card">
+        <div class="bottom d-flex flex-row justify-content-center">
+            <form
+                hx-post="@Url.Action("AddItem", "SwapOob")"
+                hx-swap="outerHTML"
+                hx-target="#shoppingItem">
+                <input id="ItemsSelected" name="ItemsSelected" type="hidden" value="@Model.ItemsSelected">
+                <div class="input-group mb-3">
+                    <button type="submit" class="btn btn-success btn-sm add"> Add Item </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

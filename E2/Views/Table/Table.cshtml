@@ -1,0 +1,103 @@
+﻿@model E2.Controllers.TableViewModel
+
+<script type="text/javascript">
+var debounce;
+function refreshTable(){
+    htmx.trigger('#frmFilter', 'submit');
+}
+ $(document).ready(function (){
+    $('#lnkPrevPage').click(function (){
+        $('#@Html.IdFor(x => x.Criteria.Offset)').val(@Model.Criteria.Offset - @Model.Criteria.Count);
+        refreshTable();
+    });
+    $('#lnkNextPage').click(function (){
+        $('#@Html.IdFor(x => x.Criteria.Offset)').val(@Model.Criteria.Offset + @Model.Criteria.Count);
+        refreshTable();
+    });
+    $('#lnkSortById').click(function (){
+        $('#@Html.IdFor(x => x.Criteria.SortColumn)').val('Id');
+        $('#@Html.IdFor(x => x.Criteria.SortDescending)').val('@(!Model.Criteria.SortDescending)'.toLowerCase());
+        refreshTable();
+    });
+    $('#lnkSortByName').click(function (){
+        $('#@Html.IdFor(x => x.Criteria.SortColumn)').val('Name');
+        $('#@Html.IdFor(x => x.Criteria.SortDescending)').val('@(!Model.Criteria.SortDescending)'.toLowerCase());
+        refreshTable();
+    });
+    $('#ddPageSize').change(function (){
+        $('#@Html.IdFor(x => x.Criteria.Count)').val($('#ddPageSize').val());
+        refreshTable();
+    });
+    $('#txtFilter').on('input', function (e) {
+        clearTimeout(debounce);
+        debounce = setTimeout( 
+            function () { 
+                $('#@Html.IdFor(x => x.Criteria.FilterText)').val(e.target.value);
+                refreshTable();
+            }, 1000);
+    });
+    
+ });
+</script>
+
+<div id="table-filter" hx-swap-oob="true">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="search-addon">
+            <img id="search-icon" src="~/img/search.svg" width="16"/>
+        </span>
+        <input type="text" id="txtFilter" autocomplete="off" value="@Model.Criteria.FilterText" aria-describedby="search-addon">
+    </div>
+    <div>
+        <a id="lnkPrevPage" @(Model.IsFirstPage()? "style=display:none" : "") href="#"> <i class="fa fa-arrow-left"></i> </a>
+        <a id="lnkNextPage" @(Model.IsLastPage()? "style=display:none" : "") href="#"> <i class="fa fa-arrow-right"></i> </a>
+    </div>
+    <div>
+        <span> Displaying @(Model.Criteria.Offset+1) - @(Model.Criteria.Offset + Model.Rows.Count) of @Model.TotalItems </span>
+        <select id="ddPageSize">
+            @foreach (var o in new List<int> {10, 20, 50})
+            {
+                if (Model.Criteria.Count == o)
+                {
+                    <option value="@o" selected="selected">@o</option>
+                }
+                else
+                {
+                    <option value="@o">@o</option>
+                }
+            }
+        </select>
+    </div>
+    <form hx-post="@Url.Action("Table", "Table")"
+        id="frmFilter"
+        hx-target="#table-container">
+        @Html.HiddenFor(x => x.Criteria.FilterText)
+        @Html.HiddenFor(x => x.Criteria.Count)
+        @Html.HiddenFor(x => x.Criteria.Offset)
+        @Html.HiddenFor(x => x.Criteria.SortColumn)
+        @Html.HiddenFor(x => x.Criteria.SortDescending)
+    </form>
+</div>
+
+<div id="table-container" class="table-container">
+    <table>
+        <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th style="cursor: pointer;"><a id="lnkSortById" href="#">Id @Html.Raw(Model.Criteria.GetSortArrowForColumn("Id"))</a></th>
+            <th style="cursor: pointer;"><a id="lnkSortByName" href="#">Name @Html.Raw(Model.Criteria.GetSortArrowForColumn("Name"))</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var row in Model.Rows)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox"/>
+                </td>
+                <td>@row.Id</td>
+                <td>@row.Name</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

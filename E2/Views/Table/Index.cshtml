@@ -1,0 +1,15 @@
+﻿<p>A server-side table with commonly needed use cases</p>
+
+<div id="table-filter"></div>
+
+<div class="progress">
+    <div class="indeterminate"></div>
+</div>
+
+<div id="table-container"
+     class="table-container"
+     hx-get="@Url.Action("Table", "Table")"
+     hx-swap="outerHTML"
+     hx-trigger="load"
+>
+</div>

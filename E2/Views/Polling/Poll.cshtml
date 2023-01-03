@@ -1,0 +1,8 @@
+﻿@model DateTime
+<!-- this will poll continually every 2 sec however if you add a flag to the viewmodel indicating a stop condition you can stop the polling -->
+<div class="container"
+     hx-get="@Url.Action("Poll", "Polling")"
+     hx-trigger="every 2s"
+     hx-swap="outerHtml">
+     The server says utc now is @Model.ToString("O")
+</div>

@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        @ViewData["Title"] - HTMX lab
+    </title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/fontawesome/all.min.css">
+    @await RenderSectionAsync("head", false)
+</head>
+
+<body>
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+    <header class="d-flex align-items-center pb-3 mb-5 border-bottom ">
+        <a href="@Url.Action("Index", "Home")">Index</a>
+    </header>
+    <main class="col-8">
+        @RenderBody()
+    </main>
+    <footer class="pt-5 my-5 text-muted border-top">
+    </footer>
+</div>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/htmx.min.js"></script>
+<script src="/js/_hyperscript.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+@await RenderSectionAsync("end", false)
+</body>
+</html>
+

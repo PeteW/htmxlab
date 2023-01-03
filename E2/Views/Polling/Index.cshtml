@@ -1,0 +1,8 @@
+﻿@model dynamic
+
+<p>A simple example of polling</p>
+<div id="content"
+     hx-get="@Url.Action("Poll", "Polling")"
+     hx-trigger="load"
+>
+</div>

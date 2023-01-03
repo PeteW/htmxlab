@@ -1,0 +1,24 @@
+﻿@model dynamic
+<div class="card m-5 p-5 ms-0 text-center">
+    <p>Example of basic GET call</p>
+    <h5 class="fs-1 mb-4" id="target"> Change Me! </h5>
+    <button
+        class="btn btn-primary btn-lg px-4"
+        hx-get="@Url.Action("BasicClick", "HelloWorld")"
+        hx-target="#target">
+        Call GET /helloworld/basicclick
+    </button>
+</div>
+<div class="card m-5 p-5 ms-0 text-center">
+    <p>Example of POST call to manipulate server-side variable</p>
+    <h5 class="fs-1 mb-4" id="target2"> Change Me! </h5>
+    <button
+        class="btn btn-primary btn-lg px-4"
+        hx-post="@Url.Action("Increment", "HelloWorld")"
+        hx-target="#target2">
+        Call POST /helloworld/increment
+    </button>
+</div>
+<div id="tabbed-content">
+</div>
+

@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">INDEX</h1>
+    <ul>
+        <li><a href="@Url.Action("Index", "HelloWorld")">The Basics</a></li>
+        <li><a href="@Url.Action("Index", "ServerSideTabs")">Server-Side Tabs</a></li>
+        <li><a href="@Url.Action("Index", "ServerSideModal")">Server-Side Modal (and server-side form validation!)</a></li>
+        <li><a href="@Url.Action("Index", "Polling")">Client side polling</a></li>
+        <li><a href="@Url.Action("Index", "SwapOob")">Swap out-of-bound elements from inside a partial</a></li>
+        <li><a href="@Url.Action("Index", "Table")">A more advanced example with tables</a></li>
+    </ul>
+</div>

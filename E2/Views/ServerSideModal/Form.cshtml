@@ -1,0 +1,38 @@
+﻿@model E2.Controllers.ModalReqViewModel
+
+<form hx-post="@Url.Action("Form", "ServerSideModal")"
+      hx-swap="outerHTML"
+      class="needs-validation"
+>
+    <div class="form-floating mb-3">
+        <input name="email"
+               id="email"
+               class="form-control"
+               asp-for="Email"
+               placeholder="name@example.com"
+        >
+        <label asp-for="Email">Email Address</label>
+        <div class="invalid-feedback">
+            <span asp-validation-for="Email"></span>
+        </div>
+    </div>
+    
+    <div class="control">
+        <button id="submitButton" type="submit" class="btn btn-primary">
+            <span class="htmx-indicator">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span class="visually-hidden">Loading...</span>
+            </span>
+            Submit
+        </button>
+        @Html.AntiForgeryToken()
+    </div>
+</form>
+@if (Model.IsValid)
+{
+    <div id="modals-here"
+         hx-get="@Url.Action("Modal", "ServerSideModal")"
+         hx-trigger="load"
+    >
+    </div>
+}

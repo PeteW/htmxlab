@@ -1,0 +1,26 @@
+﻿@model E2.Controllers.TabItemCollectionViewModel
+
+<ul class="nav nav-tabs">
+    @foreach (var item in Model.Items)
+    {
+        <li class="nav-item">
+            <a
+                href="#"
+                hx-get="@Url.Action("Tabs", "ServerSideTabs", new{id = item.Id})"
+                hx-target="#tabbed-content"
+                class="nav-link @(item.IsActive ? "active" : "")"
+                aria-current="@(item.IsActive ? "page" : "")">
+                @item.Name
+            </a>
+        </li>
+    }
+</ul>
+@{
+    var selectedItem = Model.Items.First(x => x.IsActive);
+}
+
+<div class="tab-content">
+    <div class="tab-pane show active p-1 mt-3" role="tabpanel">
+        <p> This is the content of tab #@selectedItem.Id (@selectedItem.Name) </p>
+    </div>
+</div>
