@@ -1,0 +1,16 @@
+﻿@model List<E2.Controllers.TodoViewModel>
+
+@foreach (var item in Model)
+{
+    <div>
+        @item.Description [@item.Status]
+        <a href="#"
+           hx-get="/todo/edit/@item.Id"
+           hx-target="#modal-container">
+           Edit </a> 
+        <a href="#"
+           hx-confirm="Are you sure?"
+           hx-delete="/todo/delete/@item.Id">
+           Delete </a> 
+    </div>
+}

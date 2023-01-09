@@ -1,0 +1,48 @@
+﻿@using E2.Controllers
+
+<!--
+when this select list changes a GET call will be issued to /todo/list?status=XXX
+status=[the selected value]. the server returns an html fragment
+containing the filtered list. the fragment will be injected into #table-container
+-->
+<select name="status"
+    hx-get="/todo/list"
+    hx-target="#table-container">
+    <option value="">Select...</option>
+    @foreach (var o in Enum.GetValues<TodoStatus>())
+    {
+        <option value="@o">@o</option>
+    }
+</select>
+
+<!--
+when this link is clicked a GET call will be issued to /todo/edit
+the server returns an html fragment
+the fragment will be injected into #modal-container
+-->
+<a href="#"
+   hx-get="/todo/edit"
+   hx-target="#modal-container">
+   + New </a> 
+<div id="modal-container"></div>
+
+<!--
+when this div loads a GET call will be issued to /todo/list
+the server returns an html fragment
+also, this div will be re-loaded any time the server supplies the response header [HX-Trigger-After-Swap=itemSaved]
+-->
+<div id="table-container"
+     class="table-container"
+     hx-get="/todo/list"
+     hx-swap="innerHTML"
+     hx-trigger="load, itemSaved from:body">
+</div>
+
+<script type="text/javascript">
+    function closeModal(){
+        document.getElementById('modal-container').removeChild(document.getElementById('modal-backdrop'));
+        document.getElementById('modal-container').removeChild(document.getElementById('modal'));
+    }
+    // any time the server supplies the reponse header [HX-Trigger-After-Swap=itemSaved] this code will run
+    document.body.addEventListener("itemSaved", window.closeModal);
+</script>

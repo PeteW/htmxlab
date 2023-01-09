@@ -1,4 +1,9 @@
 # this docker file is customized for running .net apps on heroku using the container feature.
+# docker build -t htmxlab .
+# heroku container:login
+# heroku container:push -a htmxlab web
+# heroku container:release -a htmxlab web
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app
 

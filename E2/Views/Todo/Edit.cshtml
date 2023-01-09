@@ -1,0 +1,45 @@
+﻿@using E2.Controllers
+@model E2.Controllers.TodoViewModel
+
+<div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modal" class="modal fade show" tabindex="-1" style="display:block;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> @(Model.Id == 0 ? "NEW ITEM" : $"EDIT Item #{Model.Id}") </h5>
+            </div>
+            <div class="modal-body">
+                <!--
+                when this form is submitted it will issue POST call to /todo/edit
+                all validation on server side. the server returns an html fragment of the edit form
+                if validation succeeds the server adds response header [HX-Trigger-After-Swap=itemSaved]
+                if validation fails then inline error message appear in the edit form
+                -->
+                <form hx-post="/todo/edit"
+                      hx-swap="innerHTML"
+                      hx-target="#modal-container"
+                      class="needs-validation">
+                    <input type="hidden" asp-for="Id" value="@Model.Id"/>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" asp-for="Description">
+                        <label asp-for="Description">Description</label>
+                        <div class="invalid-feedback" style="display: block">
+                            <span asp-validation-for="Description"></span>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.DropDownListFor(x => x.Status, Html.GetEnumSelectList<TodoStatus>(), new {@class = "form-control"})
+                        <label asp-for="Status">Status</label>
+                    </div>
+                    <div class="control">
+                        <button type="submit" class="btn btn-primary"> Submit </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
